@@ -1,12 +1,28 @@
 {
   "name": "md-links",
   "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
   "engines": {
     "node": ">=16.x"
+  },
+  
+  "script": {
+    "test": "jest --verbose --coverage",
+    "eslint": "eslint--fix--ext. js test/"
   },
   "bootcamp": {
     "createdAt": "2023-03-30T13:20:37.337Z",
     "version": "5.6.0",
     "commit": "ffa75c8b2bede153844195479abeff01f3e34227"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "eslint": "^8.37.0",
+    "jest": "^29.5.0"
   }
 }
