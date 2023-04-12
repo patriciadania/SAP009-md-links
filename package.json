@@ -1,7 +1,13 @@
 {
   "name": "md-links",
   "version": "0.1.0",
-  "description": "",
+  "description": "Projeto 4 da Laboratoria - Md Links",
+  "keywords": [
+    "node",
+    "markdown",
+    "API"
+  ],
+  "author": "Patrícia Adania de Oliveira",
   "main": "index.js",
   "type": "module",
   "engines": {
@@ -12,6 +18,7 @@
     "pretest": "npm run eslin",
     "test": "jest --verbose --coverage",
     "cli": "node ./src/cli.js ./arquivos/texto.md",
+    "cli:valida": "node ./src/cli.js ./arquivos/texto.md --valida",
     "eslint": "eslint--fix--ext. js test/"
   },
   "bootcamp": {
@@ -22,7 +29,6 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "eslint": "^8.37.0",
-    "fs": "^0.0.1-security",
     "jest": "^29.5.0",
     "node-fetch": "^3.3.1"
   },
