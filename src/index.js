@@ -3,8 +3,8 @@ import chalk from 'chalk';
 
 function extraiLinks(texto) {
   const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
-  const capturas = [...texto.matchAll(regex)];
-  const resultados = capturas.map(captura => ({[captura[1]]: captura[2]}))
+  const capturas = texto.matchAll(regex);
+  const resultados = Array.from(capturas, captura => ({[captura[1]]: captura[2]}))
   return resultados.length !== 0 ? resultados : 'não há links no arquivo';
 }
 
@@ -14,13 +14,10 @@ function trataErro(erro) {
 }
 
 function pegaArquivo(caminhoDoArquivo) {
-  return fs.promises.readFile(caminhoDoArquivo, 'utf-8')
-    .then(texto => {
-      return extraiLinks(texto);
-    })
-    .catch(erro => {
-      trataErro(erro);
-    });
+  const encoding = 'utf-8';
+  return fs.promises.readFile(caminhoDoArquivo, encoding)
+    .then(texto => extraiLinks(texto))
+    .catch(trataErro)
 }
 
 export default pegaArquivo;
