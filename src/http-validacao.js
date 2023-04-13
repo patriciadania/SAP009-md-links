@@ -2,7 +2,7 @@ function extraiLinks(arrLinks) {
     return arrLinks.map((objetoLink) => Object.values(objetoLink).join())
 }
 
-function checaStatus(listaURLs) {
+export function checaStatus(listaURLs) {
     return Promise.all(
         listaURLs.map((url) => {
             return fetch(url)
@@ -12,7 +12,7 @@ function checaStatus(listaURLs) {
     );
 }
 
-function manejaErros(erro) {
+export function manejaErros(erro) {
     if (erro.cause.code === 'UND_ERR_CONNECT_TIMEOUT') {
         return 'Link nao encontrado';
     } else {

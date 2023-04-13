@@ -18,7 +18,7 @@
     "pretest": "npm run eslin",
     "test": "jest --verbose --coverage",
     "cli": "node ./src/cli.js ./arquivos/texto.md",
-    "cli:valida": "node ./src/cli.js ./arquivos/texto.md --valida",
+    "cli:valida": "node ./src/cli.js ./arquivos/texto.md --validate",
     "eslint": "eslint--fix--ext. js test/"
   },
   "bootcamp": {
