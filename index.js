@@ -13,11 +13,11 @@ function mdLinks(pathFile) {
         if (err) {
           reject(err);
         } else {
-          const defaultRegex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
-          const searchLinks = data.match(defaultRegex);
+          const regex =/\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
+          const searchLinks = data.match(regex);
 
-          const linksArray = searchLinks.map(link => {
-            const removeItens = link.replace(')', '').replace('[', '');
+          const extraiLinks = searchLinks.map(link => {
+            const removeItens = link.replace(/.$/, '').replace('[', '');
             const split = removeItens.split('](');
             const newObj = {
               href: split[1],
@@ -26,7 +26,7 @@ function mdLinks(pathFile) {
             };
             return newObj;
           });
-          resolve(linksArray);
+          resolve(extraiLinks);
         }
       });
     }
