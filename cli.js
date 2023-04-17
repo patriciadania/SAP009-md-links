@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const chalk = require('chalk');
 const mdLinks = require('./index.js');
 const fetch = require('node-fetch');
@@ -5,6 +6,7 @@ const fetch = require('node-fetch');
 const pathFile = process.argv[2];
 const option = process.argv[3];
 
+//function cli () {
 if (option === '--stats' && process.argv.includes('--validate')) {
   mdLinks(pathFile)
     .then(result => {
@@ -98,3 +100,5 @@ if (option === '--stats' && process.argv.includes('--validate')) {
 } else {
   console.log(`Comando inválido.`);
 }
+//};
+//module.exports = cli;
