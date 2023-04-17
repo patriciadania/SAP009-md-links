@@ -2,11 +2,12 @@ const chalk = require('chalk');
 const mdLinks = require('./index.js');
 const fetch = require('node-fetch');
 
-mdLinks(process.argv[2])
-  .then(result => {
-    const option = process.argv[3];
+const pathFile = process.argv[2];
+const option = process.argv[3];
 
-    if (option === '--validate') {
+if (option === '--stats' && process.argv.includes('--validate')) {
+  mdLinks(pathFile)
+    .then(result => {
       const promises = result.map(element => {
         return fetch(element.href)
           .then(response => {
@@ -15,7 +16,44 @@ mdLinks(process.argv[2])
             return element;
           })
           .catch(error => {
-            element.status = 'Fail';
+            element.status = 'Não Encontrado';
+            element.statusText = error.message;
+            return element;
+          });
+      });
+
+      Promise.all(promises)
+        .then(linksArray => {
+          const linknique = [...new Set(linksArray.map(element => element.href))];
+          const stats = {
+            total: linksArray.length,
+            unique: linknique.length,
+            broken: linksArray.filter(element => element.status !== 200).length,
+          };
+          console.log(chalk.grey('Total:'), stats.total);
+          console.log(chalk.grey('Unique:'), stats.unique);
+          console.log(chalk.grey('Broken:'), stats.broken);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    })
+    .catch(error => {
+      console.log('Erro');
+      console.error(error);
+    });
+} else if (option === '--validate') {
+  mdLinks(pathFile)
+    .then(result => {
+      const promises = result.map(element => {
+        return fetch(element.href)
+          .then(response => {
+            element.status = response.status;
+            element.statusText = response.statusText;
+            return element;
+          })
+          .catch(error => {
+            element.status = 'Não Encontrado';
             element.statusText = error.message;
             return element;
           });
@@ -37,23 +75,26 @@ mdLinks(process.argv[2])
         .catch(error => {
           console.error(error);
         });
-    } else if (option === '--stats') {
-      const uniqueLinks = [...new Set(result.map(element => element.href))];
+    })
+    .catch(error => {
+      console.log('Erro');
+      console.error(error);
+    });
+} else if (option === '--stats') {
+  mdLinks(pathFile)
+    .then(result => {
+      const linknique = [...new Set(result.map(element => element.href))];
       const stats = {
         total: result.length,
-        unique: uniqueLinks.length,
+        unique: linknique.length,
       };
       console.log(chalk.grey('Total:'), stats.total);
       console.log(chalk.grey('Unique:'), stats.unique);
-    } else if (!option) {
-      result.forEach(element => {
-        console.log(chalk.green('\u2714'), chalk.grey(element.file), chalk.green(element.href), chalk.grey(element.text));
-      });
-    } else {
-      console.log(`Comando inválido.`);
-    }
-  })
-  .catch(error => {
-    console.log('veio para o catch');
-    console.error(error);
-  });
+    })
+    .catch(error => {
+      console.log('Erro');
+      console.error(error);
+    });
+} else {
+  console.log(`Comando inválido.`);
+}
