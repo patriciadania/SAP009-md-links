@@ -1,6 +1,15 @@
 const mdLinks = require('../index.js');
 const fs = require('fs');
-const cli = require('../cli.js');
+const fetch = require('node-fetch');
+const chalk = require('chalk');
+const  fetchLink = require('../cli.js'); 
+const fetchMock = require('fetch-mock');
+
+
+
+jest.mock('chalk');
+jest.mock('node-fetch');
+
 
 describe('mdLinks', () => {
   test('should return a promise', () => {
@@ -45,37 +54,65 @@ describe('mdLinks', () => {
 });
 
 
-describe('cli function', () => {
-  test('should return invalid command message', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    process.argv = ['node', 'cli.js', 'invalid-command'];
-    cli();
-    expect(consoleSpy).toHaveBeenCalledWith('Comando inválido.');
+
+describe('fetchLink', () => {
+  // Mock da função fetch para simular a chamada de API
+  global.fetch = jest.fn().mockImplementation(url => {
+    const response = {
+      status: 200,
+      statusText: 'OK',
+    };
+    return Promise.resolve(response);
   });
 
-  // test('should return stats', () => {
-  //   const consoleSpy = jest.spyOn(console, 'log');
-  //   process.argv = ['node', 'cli.js', './arquivos/texto.md', '--stats'];
-  //   const result = cli();
+  beforeEach(() => {
+    // Limpar mocks antes de cada teste
+    global.fetch.mockClear();
+  });
 
-  //   expect(result).not.toBeUndefined();
-  //   expect(consoleSpy).toHaveBeenCalledWith('Total:', expect.any(Number));
-  //   expect(consoleSpy).toHaveBeenCalledWith('Unique:', expect.any(Number));
-  // });
+  test('deve atualizar o status e statusText corretamente com uma resposta válida', () => {
+    const element = {
+      href: 'https://www.example.com',
+    };
 
-  // test('should return stats and validate', () => {
-  //   const consoleSpy = jest.spyOn(console, 'log');
-  //   process.argv = ['node', 'cli.js', 'path/to/file.md', '--stats', '--validate'];
-  //   cli();
-  //   expect(consoleSpy).toHaveBeenCalledWith('Total:', expect.any(Number));
-  //   expect(consoleSpy).toHaveBeenCalledWith('Unique:', expect.any(Number));
-  //   expect(consoleSpy).toHaveBeenCalledWith('Broken:', expect.any(Number));
-  // });
+    return fetchLink(element).then(result => {
+      expect(result).toEqual(expect.objectContaining({
+        status: 200,
+        statusText: 'OK',
+      }));
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(global.fetch).toHaveBeenCalledWith('https://www.example.com');
+    });
+  });
 
-  test('should return validated links', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    process.argv = ['node', 'cli.js', 'path/to/file.md', '--validate'];
-    cli();
-    expect(consoleSpy).toHaveBeenCalledWith(expect.any(String));
+  test('deve atualizar o status e statusText corretamente com uma resposta de erro', () => {
+    const element = {
+      href: 'https://www.example.com',
+    };
+
+    // Simular uma resposta de erro na chamada de API
+    global.fetch.mockImplementationOnce(url => {
+      const response = {
+        status: 404,
+        statusText: 'Not Found',
+      };
+      return Promise.resolve(response);
+    });
+
+    return fetchLink(element).then(result => {
+      expect(result).toEqual(expect.objectContaining({
+        status: 404,
+        statusText: 'Not Found',
+      }));
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(global.fetch).toHaveBeenCalledWith('https://www.example.com');
+    });
+  });
+
+  test('deve rejeitar a promise com erro ao passar um elemento inválido ou sem URL', () => {
+    const element = null;
+
+    return expect(fetchLink(element)).rejects.toThrow('Elemento inválido ou sem URL');
   });
 });
+
