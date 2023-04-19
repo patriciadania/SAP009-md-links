@@ -85,6 +85,13 @@ peculiaridades da linguagem, convenções e boas práticas.
 
 <div style="display:flex">
   <div align="center">
+    <img alt="sem comando" width="850"src="https://user-images.githubusercontent.com/120285942/233188268-57610ee2-428e-45f3-8009-9106f44bbf5f.png"/><br>
+  
+
+    Comando: $ md-links ./arquivos/texto.md
+    
+
+  <div align="center">
     <img alt="comando validate" width="850"src="https://user-images.githubusercontent.com/120285942/232912970-6280d788-f60f-4da1-a72e-8a5559e50369.png"/><br>
   
     Comando: $ md-links ./arquivos/texto.md --validate
