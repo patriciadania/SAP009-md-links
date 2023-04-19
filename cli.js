@@ -6,6 +6,18 @@ const fetch = require('node-fetch');
 const pathFile = process.argv[2];
 const option = process.argv[3];
 
+const statusMessages = {
+  '200': 'OK',
+  '201': 'Criado',
+  '204': 'Nenhum conteúdo',
+  '400': 'Requisição inválida',
+  '401': 'Não autorizado',
+  '403': 'Proibido',
+  '404': 'Não encontrado',
+  '500': 'Erro interno do servidor',
+  '502': 'Gateway ruim',
+  '503': 'Serviço indisponível',
+};
 
 function fetchLink(element) {
   if (!element || !element.href) {
@@ -15,7 +27,7 @@ function fetchLink(element) {
   return fetch(element.href)
     .then(response => {
       element.status = response.status;
-      element.statusText = response.statusText;
+      element.statusText = statusMessages[response.status.toString()] || response.statusText;;
       return element;
     })
     .catch(error => {
