@@ -13,7 +13,7 @@ function mdLinks(pathFile) {
         if (err) {
           reject(err);
         } else {
-          const regex =/\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
+          const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
           const searchLinks = data.match(regex);
 
           const extraiLinks = searchLinks.map(link => {
