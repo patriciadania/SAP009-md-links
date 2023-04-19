@@ -129,7 +129,15 @@ if (option === '--stats' && process.argv.includes('--validate')) {
 } else if (option === '--stats') {
   handleStatsOption();
 } else {
-  console.log(`Comando inválido.`);
+// Se nenhuma opção for selecionada, imprime apenas os links
+mdLinks(pathFile)
+.then(result => {
+result.forEach(element => {
+console.log(chalk.grey(element.file), chalk.grey(element.href), chalk.grey(element.text));
+});
+})
+.catch(error => {
+console.log('Erro');
+console.error(error);
+});
 }
-
-module.exports = fetchLink,printStats,printValidateResult, printStatsWithBroken, handleStatsOption, handleStatsWithValidateOption;
