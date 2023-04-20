@@ -80,7 +80,7 @@ peculiaridades da linguagem, convenções e boas práticas.
 ## 3. Instalação
   
 
-  * `npm install patriciadania/md-links`
+  * `npm install md-links-patriciadania`
     
 ## 4. Comandos
 
