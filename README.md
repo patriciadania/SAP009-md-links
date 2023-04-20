@@ -145,8 +145,9 @@ como Airbnb, você deverá modificar este arquivo.
 
  <div style="display:flex">
   <div align="center">
-    <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/120285942/232916018-ac5cd06a-5815-4f00-96e9-aab0e9843c12.png"/><br>
-  
+    <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/120285942/233455697-88c128f1-e00d-4b65-8864-6eb746131a68.jpg"/><br>
+
+
    Fluxograma para estudos.
   </div>
  </div>
