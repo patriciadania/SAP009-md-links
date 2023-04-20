@@ -1,5 +1,5 @@
 {
-  "name": "md-links",
+  "name": "md-links-patriciadania",
   "bin": {
     "md-links": "cli.js"
   },
@@ -13,7 +13,7 @@
   ],
   "type": "commonjs",
   "main": "index.js",
-  "author": "Patrícia Adania de Oliveira <patricia.adania@hotmail.com>",
+  "author": "Patrícia Adania de Oliveira <patriciadania>",
   "license": "MIT",
   "engines": {
     "node": ">=16.x"
@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "chalk": "^3.0.0",
-    "node-fetch": "^2.6.5"
+    "node-fetch": "^2.6.5",
+    "md-links": "https://github.com/patriciadania/md-links"
   },
   "directories": {
     "test": "test"
