@@ -1,5 +1,5 @@
 {
-  "name": "md-links-patriciadania",
+  "name": "md-links-patriciaadania",
   "bin": {
     "md-links": "cli.js"
   },
@@ -12,7 +12,7 @@
     "API"
   ],
   "type": "commonjs",
-  "main": "index.js",
+  "main": "cli.js",
   "author": "Patrícia Adania de Oliveira <patriciadania>",
   "license": "MIT",
   "engines": {
@@ -44,4 +44,5 @@
   "directories": {
     "test": "test"
   }
+  
 }
