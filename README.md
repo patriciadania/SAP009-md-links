@@ -6,8 +6,10 @@ Quarto projeto desenvolvido pelo bootcamp @Laboratoria . [BACK-END] Markdown Lin
 <div align="center">
   
   
- 
+
   <img align="center" alt="Rafa-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
+  <img align="center" alt="git" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
+  <img align="center" alt="git" height="30" width="40" src="https://camo.githubusercontent.com/900baefb89e187c8b32cdbb3b440d1502fe8f30a1a335cc5dc5868af0142f8b1/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f64657669636f6e732f64657669636f6e2f69636f6e732f6e6f64656a732f6e6f64656a732d6f726967696e616c2e737667" />
   <img align="center" alt="vscode" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" />
   
   <br>
@@ -78,9 +80,10 @@ peculiaridades da linguagem, convenções e boas práticas.
 
 
 ## 3. Instalação
+  
 
-* `npm install md-links`
-
+  * `npm install md-links-patriciaadania`
+    
 ## 4. Comandos
 
 <div style="display:flex">
@@ -145,8 +148,9 @@ como Airbnb, você deverá modificar este arquivo.
 
  <div style="display:flex">
   <div align="center">
-    <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/120285942/232916018-ac5cd06a-5815-4f00-96e9-aab0e9843c12.png"/><br>
-  
+    <img alt="fluxograma" width="650"src="https://user-images.githubusercontent.com/120285942/233455697-88c128f1-e00d-4b65-8864-6eb746131a68.jpg"/><br>
+
+
    Fluxograma para estudos.
   </div>
  </div>

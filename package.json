@@ -13,6 +13,7 @@
   ],
   "type": "commonjs",
   "main": "index.js",
+
   "author": "Patrícia Adania de Oliveira <patriciadania>",
   "license": "MIT",
   "engines": {
@@ -43,4 +44,3 @@
     "test": "test"
   }
   
-}
