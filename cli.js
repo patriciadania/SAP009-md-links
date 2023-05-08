@@ -1,51 +1,57 @@
 #!/usr/bin/env node
 const chalk = require('chalk');
-const mdLinks = require('./index.js');
-
+const { mdLinks, validateAndStats } = require('./index');
+const path = require('path');
 
 const pathFile = process.argv[2];
-const option = process.argv[3];
+const options = {
+  validate: process.argv.includes('--validate') || process.argv.includes('-v'),
+  stats: process.argv.includes('--stats') || process.argv.includes('-s'),
+  validateAndStats: process.argv.includes('--validate') && process.argv.includes('--stats'),
+};
 
-if (option === '--stats' && process.argv.includes('--validate')) {
-  mdLinks(pathFile, { validate: true })
-    .then(result => {
-      printStatsWithBroken(result);
+function printLinks(links) {
+  links.forEach((link) => {
+    const statusColor =
+      link.status === 'FAIL' || link.status >= 400 ? chalk.red : chalk.green;
+    const status = link.status === undefined ? '' : ` ${link.status} ${statusColor(link.statusText || '')}`;
+    const output = `${chalk.blue(link.file)} ${chalk.cyan(link.href)}${status}`;
+    console.log(output);
+  });
+}
+
+if (options.validateAndStats) {
+  validateAndStats(pathFile, options)
+    .then((result) => {
+      console.log(chalk.blue(`Total: ${result.total}`));
+      console.log(chalk.cyan(`Unique: ${result.unique}`));
+      console.log(chalk.green(`OK: ${result.ok}`));
+      console.log(chalk.red(`Broken: ${result.broken}`));
     })
-    .catch(error => {
-      console.log('Erro');
-      console.error(error);
-    });
-} else if (option === '--validate') {
-  mdLinks(pathFile, { validate: true })
-    .then(result => {
-      result.forEach(element => {
-        printValidateResult(element);
-      });
-    })
-    .catch(error => {
-      console.log('Erro');
-      console.error(error);
-    });
-} else if (option === '--stats') {
-  mdLinks(pathFile)
-    .then(result => {
-      printStats(result);
-    })
-    .catch(error => {
-      console.log('Erro');
-      console.error(error);
+    .catch((error) => {
+      if (error.code === 'ENOENT') {
+        console.error(chalk.red(`File or directory "${path.relative(process.cwd(), pathFile)}" does not exist`));
+      } else {
+        console.error(chalk.red(error.message));
+      }
     });
 } else {
-  // Se nenhuma opção for selecionada, imprime
-  mdLinks(pathFile)
-  .then(result => {
-  result.forEach(element => {
-  console.log(chalk.grey(element.file), chalk.grey(element.href), chalk.grey(element.text));
-  });
-  })
-  .catch(error => {
-  console.log('Erro');
-  console.error(error);
-  });
-  }
-  
+  mdLinks(pathFile, options)
+    .then((result) => {
+      if (result.length === 0) {
+        console.log(chalk.yellow('No links found in file or directory'));
+      } else if (options.stats) {
+        console.log(chalk.blue(`Total: ${result.total}`));
+        console.log(chalk.cyan(`Unique: ${result.unique}`));
+      } else {
+        printLinks(result.links);
+      }
+    })
+    .catch((error) => {
+      if (error.code === 'ENOENT') {
+        console.error(chalk.red(`File or directory "${path.relative(process.cwd(), pathFile)}" does not exist`));
+      } else {
+        console.error(chalk.red(error.message));
+      }
+    });
+
